@@ -1,0 +1,301 @@
+service: lambda-flow-backend
+frameworkVersion: '>=3.0.0'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-south-1
+  memorySize: 512
+  timeout: 30
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    NODE_OPTIONS: --enable-source-maps
+    IS_OFFLINE: false
+    NODE_ENV: production
+    WORKFLOW_TABLE: LambdaFlowWorkflows
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource: "*"
+
+plugins:
+  - serverless-esbuild
+
+package:
+  individually: true
+
+custom:
+  esbuild:
+    bundle: true
+    format: cjs
+    sourcemap: true
+    target: node18
+    platform: node
+    exclude: ['aws-sdk']
+
+functions:
+  runFlow:
+    handler: src/lambdas/orchestrator/runFlow.handler
+    events:
+      - http:
+          path: run-flow
+          method: post
+          cors: true
+      - http:
+          path: run-flow
+          method: options
+          cors: true
+
+  saveWorkflow:
+    handler: src/lambdas/orchestrator/saveWorkflow.handler
+    events:
+      - http:
+          path: save-workflow/{workflowId}
+          method: post
+          cors: true
+      - http:
+          path: save-workflow/{workflowId}
+          method: options
+          cors: true
+
+  loadWorkflow:
+    handler: src/lambdas/orchestrator/loadWorkflow.handler
+    events:
+      - http:
+          path: load-workflow/{workflowId}
+          method: get
+          cors: true
+      - http:
+          path: load-workflow/{workflowId}
+          method: options
+          cors: true
+
+  listWorkflows:
+    handler: src/lambdas/orchestrator/listWorkflows.handler
+    events:
+      - http:
+          path: list-workflows
+          method: get
+          cors: true
+      - http:
+          path: list-workflows
+          method: options
+          cors: true
+          
+  scheduleWorkflow:
+    handler: src/lambdas/orchestrator/scheduleWorkflow.handler
+    role: ScheduleWorkflowRole
+    events:
+      - http:
+          path: schedule-workflow/{workflowId}
+          method: post
+          cors: true
+      - http:
+          path: schedule-workflow/{workflowId}
+          method: options
+          cors: true
+
+
+  triggerApiGateway:
+    handler: src/lambdas/orchestrator/triggerApiGateway.handler
+    events:
+      - http:
+          path: trigger/apigateway/{workflowId}
+          method: post
+          cors: true
+      - http:
+          path: trigger/apigateway/{workflowId}
+          method: options
+          cors: true
+
+  triggerSchedule:
+    handler: src/lambdas/orchestrator/triggerSchedule.handler
+    events:
+      - http:
+          path: trigger/schedule/{workflowId}
+          method: post
+          cors: true
+      - http:
+          path: trigger/schedule/{workflowId}
+          method: options
+          cors: true
+
+  triggerEventBridge:
+    handler: src/lambdas/orchestrator/triggerEventBridge.handler
+    events:
+      - http:
+          path: trigger/eventbridge/{workflowId}
+          method: post
+          cors: true
+      - http:
+          path: trigger/eventbridge/{workflowId}
+          method: options
+          cors: true
+
+  triggerSNS:
+    handler: src/lambdas/orchestrator/triggerSNS.handler
+    events:
+      - http:
+          path: trigger/sns/{workflowId}
+          method: post
+          cors: true
+      - http:
+          path: trigger/sns/{workflowId}
+          method: options
+          cors: true
+
+  triggerS3:
+    handler: src/lambdas/orchestrator/triggerS3.handler
+    events:
+      - http:
+          path: trigger/s3/{workflowId}
+          method: post
+          cors: true
+      - http:
+          path: trigger/s3/{workflowId}
+          method: options
+          cors: true
+
+  triggerDynamoDB:
+    handler: src/lambdas/orchestrator/triggerDynamoDB.handler
+    events:
+      - http:
+          path: trigger/dynamodb/{workflowId}
+          method: post
+          cors: true
+      - http:
+          path: trigger/dynamodb/{workflowId}
+          method: options
+          cors: true
+
+  controlCategory:
+    handler: src/lambdas/categories/control.handler
+    memorySize: 512
+    timeout: 30
+
+  aiCategory:
+    handler: src/lambdas/categories/ai.handler
+    memorySize: 1024
+    timeout: 60
+    role: AiCategoryRole
+
+  dataCategory:
+    handler: src/lambdas/categories/data.handler
+    memorySize: 512
+    role: DataCategoryRole
+
+  fileCategory:
+    handler: src/lambdas/categories/file.handler
+    memorySize: 512
+    role: FileCategoryRole
+
+  triggersCategory:
+    handler: src/lambdas/categories/triggers.handler
+    memorySize: 512
+    role: TriggersCategoryRole
+
+  notificationsCategory:
+    handler: src/lambdas/categories/notifications.handler
+    memorySize: 512
+    role: NotificationsCategoryRole
+
+  integrationsCategory:
+    handler: src/lambdas/categories/integrations.handler
+    memorySize: 512
+
+  utilityCategory:
+    handler: src/lambdas/categories/utility.handler
+    memorySize: 512
+
+resources:
+  Resources:
+    AiCategoryRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: ai-category-role
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: ai-category-policy
+            PolicyDocument: ${file(./iam-policies/aiCategory.json)}
+
+    DataCategoryRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: data-category-role
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: data-category-policy
+            PolicyDocument: ${file(./iam-policies/dataCategory.json)}
+
+    FileCategoryRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: file-category-role
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: file-category-policy
+            PolicyDocument: ${file(./iam-policies/fileCategory.json)}
+
+    TriggersCategoryRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: triggers-category-role
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: triggers-category-policy
+            PolicyDocument: ${file(./iam-policies/triggersCategory.json)}
+
+    NotificationsCategoryRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: notifications-category-role
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: notifications-category-policy
+            PolicyDocument: ${file(./iam-policies/notificationsCategory.json)}
+
+    ScheduleWorkflowRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: schedule-workflow-role
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: schedule-workflow-policy
+            PolicyDocument: ${file(./iam-policies/scheduleWorkflow.json)}

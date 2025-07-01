@@ -1,0 +1,240 @@
+{
+  "nodes": [
+    {
+      "dragging": false,
+      "data": {
+        "label": "Sentiment Analysis",
+        "type": "sentimentanalysis",
+        "config": {},
+        "workflowId": "Customer-Sentiment-Escalation"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 375,
+        "y": 135
+      },
+      "id": "92326164-014d-4dc7-9250-905caecc3537",
+      "position": {
+        "x": 375,
+        "y": 135
+      },
+      "type": "sentimentanalysis",
+      "selected": false,
+      "height": 120
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Condition",
+        "type": "condition",
+        "config": {
+          "expression": "sentiment===\"NEGATIVE\""
+        },
+        "workflowId": "Customer-Sentiment-Escalation"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 720,
+        "y": 135
+      },
+      "id": "25de978d-07db-418e-b1e1-511d0a0db126",
+      "position": {
+        "x": 720,
+        "y": 135
+      },
+      "type": "condition",
+      "selected": false,
+      "height": 141
+    },
+    {
+      "dragging": false,
+      "data": {
+        "label": "Extract Entities",
+        "type": "extractentities",
+        "config": {},
+        "workflowId": "Customer-Sentiment-Escalation"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 90,
+        "y": 375
+      },
+      "id": "7e2c1afb-1c50-429b-8075-12bb869b7abc",
+      "position": {
+        "x": 90,
+        "y": 375
+      },
+      "type": "extractentities",
+      "selected": false,
+      "height": 141
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Text Template",
+        "type": "texttemplate",
+        "config": {
+          "template": "<!DOCTYPE html> <html> <head>   <meta charset=\"UTF-8\" />   <title>User Feedback Report</title>   <style>     body { font-family: Arial, sans-serif; padding: 20px; }     h2 { color: #2c3e50; }     blockquote {       background: #f9f9f9;       padding: 10px;       border-left: 5px solid #ccc;       margin: 10px 0;     }     .keywords li {       margin-bottom: 4px;     }     .footer {       font-size: 12px;       color: gray;       margin-top: 30px;       text-align: center;     }   </style> </head> <body>   <h2>📬 New User Feedback Received</h2>    <p><strong>📅 Timestamp:</strong> {{timestamp}}</p>    <p><strong>🧠 Sentiment:</strong>     <span>{{sentiment}}</span>   </p>    <p><strong>📝 Feedback Message:</strong></p>   <blockquote>{{text}}</blockquote>    <p><strong>🔍 Extracted Keywords:</strong></p>   <ul class=\"keywords\">  {{entitiesRaw}}  </ul>    <div class=\"footer\">     This alert was generated automatically by LambdaFlow<br />     <em>Escalation Flow – Sentiment-driven feedback routing</em>   </div> </body> </html>"
+        },
+        "workflowId": "Customer-Sentiment-Escalation"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 465,
+        "y": 315
+      },
+      "id": "bd8b95ed-3452-447c-b436-96cfea071df1",
+      "position": {
+        "x": 465,
+        "y": 315
+      },
+      "type": "texttemplate",
+      "selected": false,
+      "height": 120
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {
+          "subject": "New User Feedback",
+          "to": "er.tlakhmani@gmail.com"
+        },
+        "label": "Send Email (SES)",
+        "type": "sendemail",
+        "config": {
+          "from": "er.tlakhmani@gmail.com"
+        },
+        "workflowId": "Customer-Sentiment-Escalation"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 765,
+        "y": 315
+      },
+      "id": "d144ce75-da5e-4b38-8da0-010ec2799a10",
+      "position": {
+        "x": 765,
+        "y": 315
+      },
+      "type": "sendemail",
+      "selected": false,
+      "height": 141
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {
+          "json": "{\"text\":\"I ordered a ZentoTab X1 from Zentora, but the experience was disappointing. The delivery was delayed by over a week, and when it finally arrived, the screen had a dead pixel. I tried contacting customer support, but it took three days to get a response. This is not what I expected from a company like Zentora.\",\"timestamp\":\"28th June 2025 12:03 PM (IST)\"}"
+        },
+        "label": "Build JSON",
+        "type": "buildjson",
+        "config": {
+          "fields": [
+            "text",
+            "timestamp"
+          ]
+        },
+        "workflowId": "Customer-Sentiment-Escalation"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 600,
+        "y": 750
+      },
+      "id": "cd7a00d8-9083-49ca-b86e-f0d71575969d",
+      "position": {
+        "x": 600,
+        "y": 750
+      },
+      "type": "buildjson",
+      "selected": true,
+      "height": 122
+    },
+    {
+      "dragging": false,
+      "data": {
+        "label": "API Gateway Trigger",
+        "type": "apigatewaytrigger",
+        "config": {},
+        "workflowId": "Customer-Sentiment-Escalation"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 60,
+        "y": 90
+      },
+      "id": "c36aa10d-5a41-4a70-8487-a465da0ce6d2",
+      "position": {
+        "x": 60,
+        "y": 90
+      },
+      "type": "apigatewaytrigger",
+      "selected": false,
+      "height": 220
+    }
+  ],
+  "edges": [
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "92326164-014d-4dc7-9250-905caecc3537",
+      "id": "reactflow__edge-92326164-014d-4dc7-9250-905caecc3537-25de978d-07db-418e-b1e1-511d0a0db126",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "25de978d-07db-418e-b1e1-511d0a0db126"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "25de978d-07db-418e-b1e1-511d0a0db126",
+      "id": "reactflow__edge-25de978d-07db-418e-b1e1-511d0a0db126-7e2c1afb-1c50-429b-8075-12bb869b7abc",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "7e2c1afb-1c50-429b-8075-12bb869b7abc"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "7e2c1afb-1c50-429b-8075-12bb869b7abc",
+      "id": "reactflow__edge-7e2c1afb-1c50-429b-8075-12bb869b7abc-bd8b95ed-3452-447c-b436-96cfea071df1",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "bd8b95ed-3452-447c-b436-96cfea071df1"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "bd8b95ed-3452-447c-b436-96cfea071df1",
+      "id": "reactflow__edge-bd8b95ed-3452-447c-b436-96cfea071df1-d144ce75-da5e-4b38-8da0-010ec2799a10",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "d144ce75-da5e-4b38-8da0-010ec2799a10"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "c36aa10d-5a41-4a70-8487-a465da0ce6d2",
+      "id": "reactflow__edge-c36aa10d-5a41-4a70-8487-a465da0ce6d2-92326164-014d-4dc7-9250-905caecc3537",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "92326164-014d-4dc7-9250-905caecc3537"
+    }
+  ]
+}

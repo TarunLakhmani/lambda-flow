@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:Scan",
+        "dynamodb:Query"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:ap-south-1:064725643419:table/LambdaFlowWorkflows",
+        "arn:aws:dynamodb:ap-south-1:064725643419:table/lambdaflow-dynamodb"
+      ]
+    }
+  ]
+}

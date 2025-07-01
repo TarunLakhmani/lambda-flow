@@ -1,0 +1,325 @@
+{
+  "nodes": [
+    {
+      "dragging": false,
+      "data": {
+        "label": "Document OCR (Textract)",
+        "type": "documentocr",
+        "config": {},
+        "workflowId": "OCR-Filing-System"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 885,
+        "y": -120
+      },
+      "id": "8d87249a-3d2d-4127-91b3-fe9e65b0f856",
+      "position": {
+        "x": 885,
+        "y": -120
+      },
+      "type": "documentocr",
+      "selected": false,
+      "height": 120
+    },
+    {
+      "dragging": false,
+      "data": {
+        "label": "Extract Entities",
+        "type": "extractentities",
+        "config": {},
+        "workflowId": "OCR-Filing-System"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": -480,
+        "y": 195
+      },
+      "id": "148d126a-46d2-44ba-ab22-59903c939a8c",
+      "position": {
+        "x": -480,
+        "y": 195
+      },
+      "type": "extractentities",
+      "selected": false,
+      "height": 245
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Upload to S3",
+        "type": "uploadtos3",
+        "config": {
+          "bucket": "lambdaflow-files",
+          "key": "{{Incident Category}}/{{Asset Type}}/{{Policy ID}}.pdf"
+        },
+        "workflowId": "OCR-Filing-System"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": -90,
+        "y": 195
+      },
+      "id": "268bdb52-0725-44b8-89c7-8975bf8c5ae1",
+      "position": {
+        "x": -90,
+        "y": 195
+      },
+      "type": "uploadtos3",
+      "selected": false,
+      "height": 162
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Put Item (DynamoDB)",
+        "type": "putitem",
+        "config": {
+          "tableName": "lambdaflow-dynamodb"
+        },
+        "workflowId": "OCR-Filing-System"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 930,
+        "y": 210
+      },
+      "id": "c2de1bc6-d788-4124-b8c2-c9e7d3b63dfb",
+      "position": {
+        "x": 930,
+        "y": 210
+      },
+      "type": "putitem",
+      "selected": false,
+      "height": 141
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Generate UUID",
+        "type": "generateuuid",
+        "config": {
+          "key": "id"
+        },
+        "workflowId": "OCR-Filing-System"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 285,
+        "y": 210
+      },
+      "id": "c08bbaaf-90e2-43ae-8559-9cd73b2d3e61",
+      "position": {
+        "x": 285,
+        "y": 210
+      },
+      "type": "generateuuid",
+      "selected": false,
+      "height": 120
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Build JSON",
+        "type": "buildjson",
+        "config": {
+          "fields": [
+            "id",
+            "bucket",
+            "key",
+            "entities"
+          ]
+        },
+        "workflowId": "OCR-Filing-System"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 585,
+        "y": 210
+      },
+      "id": "66dad216-e0c8-48e5-8e20-f018c7edb084",
+      "position": {
+        "x": 585,
+        "y": 210
+      },
+      "type": "buildjson",
+      "selected": false,
+      "height": 120
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "List S3 Files",
+        "type": "lists3files",
+        "config": {
+          "bucket": "lambdaflow-files",
+          "prefix": "Insurance Documents/"
+        },
+        "workflowId": "OCR-Filing-System"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": -510,
+        "y": -150
+      },
+      "id": "c901984f-6889-4cc9-969e-3f3cfd0501d7",
+      "position": {
+        "x": -510,
+        "y": -150
+      },
+      "type": "lists3files",
+      "selected": false,
+      "height": 141
+    },
+    {
+      "dragging": false,
+      "data": {
+        "label": "Loop / For Each",
+        "type": "loopforeach",
+        "config": {},
+        "workflowId": "OCR-Filing-System"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": -30,
+        "y": -135
+      },
+      "id": "c887b0b1-8e1a-46fd-a9a7-f82be4927860",
+      "position": {
+        "x": -30,
+        "y": -135
+      },
+      "type": "loopforeach",
+      "selected": false,
+      "height": 141
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Download from S3",
+        "type": "downloadfroms3",
+        "config": {
+          "bucket": "lambdaflow-files"
+        },
+        "workflowId": "OCR-Filing-System"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 435,
+        "y": -150
+      },
+      "id": "a14a286b-57cb-4075-85e3-a123db2fb2b3",
+      "position": {
+        "x": 435,
+        "y": -150
+      },
+      "type": "downloadfroms3",
+      "selected": false,
+      "height": 183
+    }
+  ],
+  "edges": [
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "8d87249a-3d2d-4127-91b3-fe9e65b0f856",
+      "id": "reactflow__edge-8d87249a-3d2d-4127-91b3-fe9e65b0f856-148d126a-46d2-44ba-ab22-59903c939a8c",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "148d126a-46d2-44ba-ab22-59903c939a8c"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "148d126a-46d2-44ba-ab22-59903c939a8c",
+      "id": "reactflow__edge-148d126a-46d2-44ba-ab22-59903c939a8c-268bdb52-0725-44b8-89c7-8975bf8c5ae1",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "268bdb52-0725-44b8-89c7-8975bf8c5ae1"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "268bdb52-0725-44b8-89c7-8975bf8c5ae1",
+      "id": "reactflow__edge-268bdb52-0725-44b8-89c7-8975bf8c5ae1-c08bbaaf-90e2-43ae-8559-9cd73b2d3e61",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "c08bbaaf-90e2-43ae-8559-9cd73b2d3e61"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "c08bbaaf-90e2-43ae-8559-9cd73b2d3e61",
+      "id": "reactflow__edge-c08bbaaf-90e2-43ae-8559-9cd73b2d3e61-66dad216-e0c8-48e5-8e20-f018c7edb084",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "66dad216-e0c8-48e5-8e20-f018c7edb084"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "66dad216-e0c8-48e5-8e20-f018c7edb084",
+      "id": "reactflow__edge-66dad216-e0c8-48e5-8e20-f018c7edb084-c2de1bc6-d788-4124-b8c2-c9e7d3b63dfb",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "c2de1bc6-d788-4124-b8c2-c9e7d3b63dfb"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "c901984f-6889-4cc9-969e-3f3cfd0501d7",
+      "id": "reactflow__edge-c901984f-6889-4cc9-969e-3f3cfd0501d7-c887b0b1-8e1a-46fd-a9a7-f82be4927860",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "c887b0b1-8e1a-46fd-a9a7-f82be4927860"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "c887b0b1-8e1a-46fd-a9a7-f82be4927860",
+      "id": "reactflow__edge-c887b0b1-8e1a-46fd-a9a7-f82be4927860-a14a286b-57cb-4075-85e3-a123db2fb2b3",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "a14a286b-57cb-4075-85e3-a123db2fb2b3"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "a14a286b-57cb-4075-85e3-a123db2fb2b3",
+      "id": "reactflow__edge-a14a286b-57cb-4075-85e3-a123db2fb2b3-8d87249a-3d2d-4127-91b3-fe9e65b0f856",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "8d87249a-3d2d-4127-91b3-fe9e65b0f856"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "lambda-flow-backend",
+  "version": "1.0.0",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.830.0",
+    "@aws-sdk/client-comprehend": "^3.830.0",
+    "@aws-sdk/client-dynamodb": "^3.830.0",
+    "@aws-sdk/client-eventbridge": "^3.835.0",
+    "@aws-sdk/client-polly": "^3.830.0",
+    "@aws-sdk/client-rekognition": "^3.830.0",
+    "@aws-sdk/client-s3": "^3.832.0",
+    "@aws-sdk/client-ses": "^3.839.0",
+    "@aws-sdk/client-sns": "^3.835.0",
+    "@aws-sdk/client-textract": "^3.830.0",
+    "@aws-sdk/lib-dynamodb": "^3.830.0",
+    "@aws-sdk/util-dynamodb": "^3.830.0",
+    "@faker-js/faker": "^9.8.0",
+    "@slack/web-api": "^7.9.3",
+    "aws-sdk": "^2.1692.0",
+    "cors": "^2.8.5",
+    "csv-parse": "^5.6.0",
+    "csv-stringify": "^6.5.2",
+    "cuid": "^3.0.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "html-pdf-node": "^1.0.7",
+    "lodash": "^4.17.21",
+    "nanoid": "^5.1.5"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.5",
+    "serverless": "^4.17.1",
+    "serverless-esbuild": "^1.55.1",
+    "serverless-offline": "^14.4.0"
+  },
+  "scripts": {
+    "deploy": "node scripts/deploy.js"
+  }
+}

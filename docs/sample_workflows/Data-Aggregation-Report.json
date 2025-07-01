@@ -1,0 +1,365 @@
+{
+  "nodes": [
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "HTTP Request",
+        "type": "httprequest",
+        "config": {
+          "url": "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd"
+        },
+        "workflowId": "Data-Aggregation-Report"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 210,
+        "y": -120
+      },
+      "id": "b90d4651-0c06-4ba2-9d42-89a3ef593175",
+      "position": {
+        "x": 210,
+        "y": -120
+      },
+      "type": "httprequest",
+      "selected": false,
+      "height": 183
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "HTTP Request",
+        "type": "httprequest",
+        "config": {
+          "url": "https://api.open-meteo.com/v1/forecast?latitude=40.71&longitude=-74.01&current_weather=true"
+        },
+        "workflowId": "Data-Aggregation-Report"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 585,
+        "y": -120
+      },
+      "id": "025a5630-c3f2-48dc-ab9c-aca657a836f2",
+      "position": {
+        "x": 585,
+        "y": -120
+      },
+      "type": "httprequest",
+      "selected": false,
+      "height": 183
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "HTTP Request",
+        "type": "httprequest",
+        "config": {
+          "url": "https://hn.algolia.com/api/v1/search?tags=front_page"
+        },
+        "workflowId": "Data-Aggregation-Report"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 915,
+        "y": -120
+      },
+      "id": "6636d702-f8cb-4f55-89ca-e8f78e50e051",
+      "position": {
+        "x": 915,
+        "y": -120
+      },
+      "type": "httprequest",
+      "selected": false,
+      "height": 162
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Text Template",
+        "type": "texttemplate",
+        "config": {
+          "template": "Today's Report:  📈 Crypto Prices: - BTC: ${{bitcoin.usd}} - ETH: ${{ethereum.usd}}  🌦 Weather in New York: - Temp: {{current_weather.temperature}}°C - Wind: {{current_weather.windspeed}} km/h  📰 Top News: 1. {{hits.0.title}} 2. {{hits.1.title}}"
+        },
+        "workflowId": "Data-Aggregation-Report"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": -195,
+        "y": 165
+      },
+      "id": "288c6897-fc0a-42e5-afc0-5c258ffadb6c",
+      "position": {
+        "x": -195,
+        "y": 165
+      },
+      "type": "texttemplate",
+      "selected": false,
+      "height": 120
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Rename JSON Keys",
+        "type": "renamejsonkeys",
+        "config": {
+          "mapping": "{\"text\":\"html\"}"
+        },
+        "workflowId": "Data-Aggregation-Report"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 210,
+        "y": 180
+      },
+      "id": "3f4c9dd5-8a52-430f-83d3-0a7896bba4c4",
+      "position": {
+        "x": 210,
+        "y": 180
+      },
+      "type": "renamejsonkeys",
+      "selected": false,
+      "height": 120
+    },
+    {
+      "dragging": false,
+      "data": {
+        "label": "Summarize Text",
+        "type": "summarizetext",
+        "config": {},
+        "workflowId": "Data-Aggregation-Report"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 570,
+        "y": 165
+      },
+      "id": "351382a6-e3db-40cc-89d3-1524744a5a8f",
+      "position": {
+        "x": 570,
+        "y": 165
+      },
+      "type": "summarizetext",
+      "selected": false,
+      "height": 120
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Text Template",
+        "type": "texttemplate",
+        "config": {
+          "template": "<h1 style=\"text-align: center;\">📊 Daily Intelligence Report</h1> <hr />  <h2>🧠 Executive Summary</h2> <p>{{text}}</p>  <hr /> <h2>📈 Cryptocurrency Prices</h2> <ul>   <li><strong>Bitcoin (BTC):</strong> ${{bitcoin.usd}}</li>   <li><strong>Ethereum (ETH):</strong> ${{ethereum.usd}}</li> </ul>  <h2>🌤 Weather in New York City</h2> <ul>   <li><strong>Temperature:</strong> {{current_weather.temperature}} °C</li>   <li><strong>Windspeed:</strong> {{current_weather.windspeed}} km/h</li> </ul>  <h2>📰 Top Hacker News Headlines</h2> <ol>   <li><a href=\"{{hits.0.url}}\" target=\"_blank\">{{hits.0.title}}</a></li>   <li><a href=\"{{hits.1.url}}\" target=\"_blank\">{{hits.1.title}}</a></li>   <li><a href=\"{{hits.2.url}}\" target=\"_blank\">{{hits.2.title}}</a></li> </ol>  <hr /> <p style=\"text-align: center; font-size: 12px; color: gray;\">   Generated automatically by LambdaFlow – Serverless Workflow Automation </p>"
+        },
+        "workflowId": "Data-Aggregation-Report"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 975,
+        "y": 165
+      },
+      "id": "85b103de-62fd-4a08-8dfe-7d10bf4707a2",
+      "position": {
+        "x": 975,
+        "y": 165
+      },
+      "type": "texttemplate",
+      "selected": false,
+      "height": 120
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Upload to S3",
+        "type": "uploadtos3",
+        "config": {
+          "bucket": "lambdaflow-files",
+          "key": "news_report.html"
+        },
+        "workflowId": "Data-Aggregation-Report"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 390,
+        "y": 375
+      },
+      "id": "a4c334d6-6240-4c78-950e-da53e74c60f8",
+      "position": {
+        "x": 390,
+        "y": 375
+      },
+      "type": "uploadtos3",
+      "selected": false,
+      "height": 141
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {},
+        "label": "Schedule Trigger",
+        "type": "scheduletrigger",
+        "config": {
+          "cron": "cron(0/2 * * * ? *)"
+        },
+        "workflowId": "Data-Aggregation-Report"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": -180,
+        "y": -135
+      },
+      "id": "ffd731d9-3b43-4869-af62-54f63382b721",
+      "position": {
+        "x": -180,
+        "y": -135
+      },
+      "type": "scheduletrigger",
+      "selected": false,
+      "height": 181
+    },
+    {
+      "dragging": false,
+      "data": {
+        "input": {
+          "subject": "Data Aggregation Report",
+          "to": "er.tlakhmani@gmail.com"
+        },
+        "label": "Send Email (SES)",
+        "type": "sendemail",
+        "config": {
+          "from": "er.tlakhmani@gmail.com"
+        },
+        "workflowId": "Data-Aggregation-Report"
+      },
+      "width": 260,
+      "positionAbsolute": {
+        "x": 870,
+        "y": 375
+      },
+      "id": "8ef26487-bea3-4310-8da6-ff95127e31db",
+      "position": {
+        "x": 870,
+        "y": 375
+      },
+      "type": "sendemail",
+      "selected": true,
+      "height": 143
+    }
+  ],
+  "edges": [
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "6636d702-f8cb-4f55-89ca-e8f78e50e051",
+      "id": "reactflow__edge-6636d702-f8cb-4f55-89ca-e8f78e50e051-288c6897-fc0a-42e5-afc0-5c258ffadb6c",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "288c6897-fc0a-42e5-afc0-5c258ffadb6c"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "b90d4651-0c06-4ba2-9d42-89a3ef593175",
+      "id": "reactflow__edge-b90d4651-0c06-4ba2-9d42-89a3ef593175-025a5630-c3f2-48dc-ab9c-aca657a836f2",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "025a5630-c3f2-48dc-ab9c-aca657a836f2"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "025a5630-c3f2-48dc-ab9c-aca657a836f2",
+      "id": "reactflow__edge-025a5630-c3f2-48dc-ab9c-aca657a836f2-6636d702-f8cb-4f55-89ca-e8f78e50e051",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "6636d702-f8cb-4f55-89ca-e8f78e50e051"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "288c6897-fc0a-42e5-afc0-5c258ffadb6c",
+      "id": "reactflow__edge-288c6897-fc0a-42e5-afc0-5c258ffadb6c-3f4c9dd5-8a52-430f-83d3-0a7896bba4c4",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "3f4c9dd5-8a52-430f-83d3-0a7896bba4c4"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "3f4c9dd5-8a52-430f-83d3-0a7896bba4c4",
+      "id": "reactflow__edge-3f4c9dd5-8a52-430f-83d3-0a7896bba4c4-351382a6-e3db-40cc-89d3-1524744a5a8f",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "351382a6-e3db-40cc-89d3-1524744a5a8f"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "351382a6-e3db-40cc-89d3-1524744a5a8f",
+      "id": "reactflow__edge-351382a6-e3db-40cc-89d3-1524744a5a8f-85b103de-62fd-4a08-8dfe-7d10bf4707a2",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "85b103de-62fd-4a08-8dfe-7d10bf4707a2"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "ffd731d9-3b43-4869-af62-54f63382b721",
+      "id": "reactflow__edge-ffd731d9-3b43-4869-af62-54f63382b721-b90d4651-0c06-4ba2-9d42-89a3ef593175",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "b90d4651-0c06-4ba2-9d42-89a3ef593175"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "85b103de-62fd-4a08-8dfe-7d10bf4707a2",
+      "id": "reactflow__edge-85b103de-62fd-4a08-8dfe-7d10bf4707a2-a4c334d6-6240-4c78-950e-da53e74c60f8",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "a4c334d6-6240-4c78-950e-da53e74c60f8"
+    },
+    {
+      "sourceHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#333"
+      },
+      "source": "85b103de-62fd-4a08-8dfe-7d10bf4707a2",
+      "id": "reactflow__edge-85b103de-62fd-4a08-8dfe-7d10bf4707a2-8ef26487-bea3-4310-8da6-ff95127e31db",
+      "type": "smoothstep",
+      "targetHandle": null,
+      "target": "8ef26487-bea3-4310-8da6-ff95127e31db"
+    }
+  ]
+}
